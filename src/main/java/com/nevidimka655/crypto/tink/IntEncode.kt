@@ -9,7 +9,6 @@ object IntEncode {
         associatedInt: Int,
         integer: Int
     ): Int {
-        //Log.d("INT_ENCODE", "key: $key;\nAI: $associatedInt\nINT: $integer\n")
         var result = integer + associatedInt
         BigInteger.valueOf((key - associatedInt).toLong()).toByteArray()
             .forEachIndexed { index, byte ->
@@ -27,7 +26,6 @@ object IntEncode {
         associatedInt: Int,
         integer: Int
     ): Int {
-        //Log.d("INT_ENCODE", "key: $key;\nAI: $associatedInt\nINT: $integer\n")
         var result = integer
         BigInteger.valueOf((key - associatedInt).toLong()).toByteArray()
             .forEachIndexed { index, byte ->
