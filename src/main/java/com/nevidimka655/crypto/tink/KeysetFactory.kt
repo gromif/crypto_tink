@@ -69,7 +69,7 @@ class KeysetFactory(
         keysetGroupId: KeysetGroupId = KeysetGroupId.STREAM_DEFAULT
     ): KeysetHandle {
         val alias = aead.uniqueId
-        return keysetList.get(alias) ?: buildKeysetManager(
+        return keysetList[alias] ?: buildKeysetManager(
             context = context,
             keyTemplateSign = aead.name,
             masterKeyAlias = getMasterKeyAliasForKeyset(
@@ -83,7 +83,7 @@ class KeysetFactory(
 
     fun pseudoRandomFunction(context: Context, template: KeysetTemplates.PRF): KeysetHandle {
         val alias = template.uniqueId
-        return keysetList.get(alias) ?: buildKeysetManager(
+        return keysetList[alias] ?: buildKeysetManager(
             context = context,
             keyTemplateSign = template.name,
             masterKeyAlias = Hex.encode("$uniqueSalt${template.uniqueId}".sha384()),
@@ -99,7 +99,7 @@ class KeysetFactory(
     ): KeysetHandle {
         val alias = getPreferencesAliasForKeyset(aeadName, aliasEncoderLetter, aeadOrdinal)
         val aliasHash = alias.hashCode()
-        return keysetList.get(aliasHash) ?: buildKeysetManager(
+        return keysetList[aliasHash] ?: buildKeysetManager(
             context = context,
             keyTemplateSign = aeadName,
             masterKeyAlias = getMasterKeyAliasForKeyset(aeadName, aliasEncoderLetter, aeadOrdinal),
