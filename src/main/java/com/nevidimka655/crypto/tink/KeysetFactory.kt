@@ -18,6 +18,7 @@ import java.security.SecureRandom
 import kotlin.random.Random
 
 class KeysetFactory(
+    private val context: Context,
     private val associatedDataConfig: AssociatedDataConfig,
     private val prefsConfig: PrefsConfig
 ) {
@@ -34,7 +35,7 @@ class KeysetFactory(
     )
 
     private val keysetList = SparseArrayCompat<KeysetHandle>()
-    private val dataFile get() = associatedDataConfig.dataFile
+    val dataFile get() = associatedDataConfig.dataFile
 
     private var uniqueSaltVar = 0
     val uniqueSalt get() = if (uniqueSaltVar == 0) loadUniqueUserSalt() else uniqueSaltVar
@@ -45,32 +46,27 @@ class KeysetFactory(
             ByteArray(associatedDataConfig.dataLength)
         ).also { decodedAssociatedData = it }
 
-    fun deterministic(context: Context) = getKeyset(
-        context = context,
+    fun deterministic() = getKeyset(
         aeadName = KeysetTemplates.DeterministicAEAD.AES256_SIV.name,
         aeadOrdinal = KeysetTemplates.DeterministicAEAD.AES256_SIV.ordinal,
         aliasEncoderLetter = KeysetGroupId.DETERMINISTIC.char
     )
 
     fun aead(
-        context: Context,
         aead: KeysetTemplates.AEAD,
         keysetGroupId: KeysetGroupId = KeysetGroupId.AEAD_DEFAULT
     ) = getKeyset(
-        context = context,
         aeadName = aead.name,
         aeadOrdinal = aead.ordinal,
         aliasEncoderLetter = keysetGroupId.char
     )
 
     fun stream(
-        context: Context,
         aead: KeysetTemplates.Stream,
         keysetGroupId: KeysetGroupId = KeysetGroupId.STREAM_DEFAULT
     ): KeysetHandle {
         val alias = aead.uniqueId
         return keysetList[alias] ?: buildKeysetManager(
-            context = context,
             keyTemplateSign = aead.name,
             masterKeyAlias = getMasterKeyAliasForKeyset(
                 aead.name,
@@ -81,10 +77,9 @@ class KeysetFactory(
         ).keysetHandle.also { keysetList.append(alias, it) }
     }
 
-    fun pseudoRandomFunction(context: Context, template: KeysetTemplates.PRF): KeysetHandle {
+    fun pseudoRandomFunction(template: KeysetTemplates.PRF): KeysetHandle {
         val alias = template.uniqueId
         return keysetList[alias] ?: buildKeysetManager(
-            context = context,
             keyTemplateSign = template.name,
             masterKeyAlias = Hex.encode("$uniqueSalt${template.uniqueId}".sha384()),
             prefsAlias = Hex.encode("${template.name}${template.uniqueId}$uniqueSalt".sha384())
@@ -92,7 +87,6 @@ class KeysetFactory(
     }
 
     private fun getKeyset(
-        context: Context,
         aeadName: String,
         aeadOrdinal: Int,
         aliasEncoderLetter: Char
@@ -100,7 +94,6 @@ class KeysetFactory(
         val alias = getPreferencesAliasForKeyset(aeadName, aliasEncoderLetter, aeadOrdinal)
         val aliasHash = alias.hashCode()
         return keysetList[aliasHash] ?: buildKeysetManager(
-            context = context,
             keyTemplateSign = aeadName,
             masterKeyAlias = getMasterKeyAliasForKeyset(aeadName, aliasEncoderLetter, aeadOrdinal),
             prefsAlias = alias
@@ -128,7 +121,6 @@ class KeysetFactory(
     }
 
     private fun buildKeysetManager(
-        context: Context,
         keyTemplateSign: String,
         masterKeyAlias: String,
         prefsFileName: String = prefsConfig.prefsFileNameDefault,
@@ -204,12 +196,11 @@ class KeysetFactory(
     }
 
     fun transformAssociatedDataToWorkInstance(
-        context: Context,
         bytesIn: ByteArray,
         encryptionMode: Boolean,
         authenticationTag: String
     ): ByteArray {
-        val aead = aead(context, KeysetTemplates.AEAD.AES256_GCM).aeadPrimitive()
+        val aead = aead(KeysetTemplates.AEAD.AES256_GCM).aeadPrimitive()
         return with(aead) {
             val tag = authenticationTag.sha384()
             if (encryptionMode) encrypt(bytesIn, tag)
