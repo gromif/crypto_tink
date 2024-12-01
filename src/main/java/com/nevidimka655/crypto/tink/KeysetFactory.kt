@@ -17,27 +17,32 @@ import java.io.File
 import java.security.SecureRandom
 import kotlin.random.Random
 
-object KeysetFactory {
-    object Config {
-        lateinit var dataFile: File
-        var dataFileName = ""
-        var dataLength = -1
-        var dataPasswordHashLength = -1
-        var prefsFileNameDefault = ""
-        lateinit var prefs: SharedPreferences
-        var prefsUniqueSaltFieldKey = ""
-    }
+class KeysetFactory(
+    private val associatedDataConfig: AssociatedDataConfig,
+    private val prefsConfig: PrefsConfig
+) {
+    data class AssociatedDataConfig(
+        val dataFile: File,
+        val dataLength: Int,
+        val dataPasswordHashLength: Int
+    )
+
+    data class PrefsConfig(
+        val prefsFileNameDefault: String,
+        val prefs: SharedPreferences,
+        val prefsUniqueSaltFieldKey: String
+    )
 
     private val keysetList = SparseArrayCompat<KeysetHandle>()
+    private val dataFile get() = associatedDataConfig.dataFile
 
     private var uniqueSaltVar = 0
     val uniqueSalt get() = if (uniqueSaltVar == 0) loadUniqueUserSalt() else uniqueSaltVar
 
-    val dataFile get() = Config.dataFile
     private var decodedAssociatedData: ByteArray? = null
     val associatedData
         get() = decodedAssociatedData ?: initAssociatedData(
-            ByteArray(Config.dataLength)
+            ByteArray(associatedDataConfig.dataLength)
         ).also { decodedAssociatedData = it }
 
     fun deterministic(context: Context) = getKeyset(
@@ -126,7 +131,7 @@ object KeysetFactory {
         context: Context,
         keyTemplateSign: String,
         masterKeyAlias: String,
-        prefsFileName: String = Config.prefsFileNameDefault,
+        prefsFileName: String = prefsConfig.prefsFileNameDefault,
         prefsAlias: String
     ): AndroidKeysetManager = AndroidKeysetManager.Builder()
         .withKeyTemplate(KeyTemplates.get(keyTemplateSign))
@@ -137,13 +142,13 @@ object KeysetFactory {
     fun initEncryptedAssociatedData(rawPassword: String) {
         if (dataFile.exists()) {
             val password = HashStringGenerator.extendString(
-                rawPassword, Config.dataPasswordHashLength
+                rawPassword, associatedDataConfig.dataPasswordHashLength
             )
             val aead = AesGcmJce(password)
             dataFile.inputStream().use {
                 val decodedBytes =
                     aead.decrypt(it.readBytes(), dataFile.name.toByteArray())
-                if (decodedBytes.size == Config.dataLength) {
+                if (decodedBytes.size == associatedDataConfig.dataLength) {
                     decodedAssociatedData = decodedBytes
                 }
             }
@@ -152,7 +157,7 @@ object KeysetFactory {
 
     fun encryptAssociatedData(rawPassword: String) {
         val password = HashStringGenerator.extendString(
-            rawPassword, Config.dataPasswordHashLength
+            rawPassword, associatedDataConfig.dataPasswordHashLength
         )
         val aead = AesGcmJce(password)
         val byteArray = associatedData
@@ -213,19 +218,19 @@ object KeysetFactory {
     }
 
     private fun loadUniqueUserSalt(): Int {
-        var salt = Config.prefs.getInt(
-            Config.prefsUniqueSaltFieldKey,
+        var salt = prefsConfig.prefs.getInt(
+            prefsConfig.prefsUniqueSaltFieldKey,
             0
         )
         while (salt == 0) {
             salt = Random.nextInt()
-            Config.prefs.edit(true) {
-                putInt(Config.prefsUniqueSaltFieldKey, salt)
+            prefsConfig.prefs.edit(true) {
+                putInt(prefsConfig.prefsUniqueSaltFieldKey, salt)
             }
         }
         return salt
     }
 
-    fun saveKeystoreFile() = Config.prefs.edit().commit()
+    fun saveKeystoreFile() = prefsConfig.prefs.edit().commit()
 
 }
