@@ -1,19 +1,35 @@
 package com.nevidimka655.crypto.tink
 
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
+
 object KeysetTemplates {
+
+    @Serializable
     enum class AEAD {
-        AES128_EAX, AES128_CTR_HMAC_SHA256,
-        CHACHA20_POLY1305, AES128_GCM,
-        AES256_EAX, AES256_CTR_HMAC_SHA256,
-        XCHACHA20_POLY1305, AES256_GCM
+        @SerialName("a") AES128_EAX,
+        @SerialName("b") AES128_CTR_HMAC_SHA256,
+        @SerialName("c") CHACHA20_POLY1305,
+        @SerialName("d") AES128_GCM,
+        @SerialName("e") AES256_EAX,
+        @SerialName("f") AES256_CTR_HMAC_SHA256,
+        @SerialName("g") XCHACHA20_POLY1305,
+        @SerialName("h") AES256_GCM
     }
 
-    enum class DeterministicAEAD { AES256_SIV }
+    @Serializable
+    enum class DeterministicAEAD { @SerialName("a") AES256_SIV }
+
+    @Serializable
     enum class Stream(val uniqueId: Int) {
-        AES128_CTR_HMAC_SHA256_1MB(uniqueId = 2000), AES128_GCM_HKDF_1MB(uniqueId = 2001),
-        AES256_CTR_HMAC_SHA256_1MB(uniqueId = 2002), AES256_GCM_HKDF_1MB(uniqueId = 2003),
-        AES128_CTR_HMAC_SHA256_4KB(uniqueId = 2004), AES128_GCM_HKDF_4KB(uniqueId = 2005),
-        AES256_CTR_HMAC_SHA256_4KB(uniqueId = 2006), AES256_GCM_HKDF_4KB(uniqueId = 2007)
+        @SerialName("a") AES128_CTR_HMAC_SHA256_1MB(uniqueId = 2000),
+        @SerialName("b") AES128_GCM_HKDF_1MB(uniqueId = 2001),
+        @SerialName("c") AES256_CTR_HMAC_SHA256_1MB(uniqueId = 2002),
+        @SerialName("d") AES256_GCM_HKDF_1MB(uniqueId = 2003),
+        @SerialName("e") AES128_CTR_HMAC_SHA256_4KB(uniqueId = 2004),
+        @SerialName("f") AES128_GCM_HKDF_4KB(uniqueId = 2005),
+        @SerialName("g") AES256_CTR_HMAC_SHA256_4KB(uniqueId = 2006),
+        @SerialName("h") AES256_GCM_HKDF_4KB(uniqueId = 2007)
     }
 
     // PrfKeyTemplates
