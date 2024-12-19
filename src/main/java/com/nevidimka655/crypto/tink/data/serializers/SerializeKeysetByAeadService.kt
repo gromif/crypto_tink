@@ -1,12 +1,12 @@
-package com.nevidimka655.crypto.tink.domain.usecase
+package com.nevidimka655.crypto.tink.data.serializers
 
 import com.google.crypto.tink.Aead
 import com.google.crypto.tink.KeysetHandle
 import com.google.crypto.tink.TinkProtoKeysetFormat
-import com.nevidimka655.crypto.tink.domain.usecase.encoder.HexUseCase
+import com.nevidimka655.crypto.tink.core.encoders.HexService
 
-class SerializeKeysetByAeadUseCase(
-    private val hexUseCase: HexUseCase
+class SerializeKeysetByAeadService(
+    private val hexService: HexService
 ) {
 
     fun serialize(
@@ -18,7 +18,7 @@ class SerializeKeysetByAeadUseCase(
         /* keysetEncryptionAead = */ aead,
         /* associatedData = */ associatedData
     ).let {
-        hexUseCase.encode(bytes = it)
+        hexService.encode(bytes = it)
     }
 
 }

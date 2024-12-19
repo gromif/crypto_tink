@@ -1,14 +1,10 @@
-package com.nevidimka655.crypto.tink
+package com.nevidimka655.crypto.tink.domain
 
 import com.google.crypto.tink.Parameters
-import com.google.crypto.tink.aead.AeadParameters
 import com.google.crypto.tink.aead.PredefinedAeadParameters
-import com.google.crypto.tink.daead.DeterministicAeadParameters
 import com.google.crypto.tink.daead.PredefinedDeterministicAeadParameters
 import com.google.crypto.tink.prf.PredefinedPrfParameters
-import com.google.crypto.tink.prf.PrfParameters
 import com.google.crypto.tink.streamingaead.PredefinedStreamingAeadParameters
-import com.google.crypto.tink.streamingaead.StreamingAeadParameters
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 

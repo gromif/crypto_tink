@@ -1,12 +1,13 @@
-package com.nevidimka655.crypto.tink
+package com.nevidimka655.crypto.tink.data
 
 import android.os.Build
 import androidx.collection.SparseArrayCompat
 import com.google.crypto.tink.KeysetHandle
 import com.google.crypto.tink.Parameters
-import com.google.crypto.tink.subtle.AesGcmJce
-import com.nevidimka655.crypto.tink.domain.model.AssociatedDataConfig
-import com.nevidimka655.crypto.tink.domain.model.keyset.KeysetFactory
+import com.google.crypto.tink.config.TinkConfig
+import com.nevidimka655.crypto.tink.domain.AssociatedDataConfig
+import com.nevidimka655.crypto.tink.domain.KeysetTemplates
+import com.nevidimka655.crypto.tink.domain.keyset.KeysetFactory
 import com.nevidimka655.crypto.tink.extensions.aeadPrimitive
 import java.security.SecureRandom
 
@@ -117,6 +118,10 @@ class KeysetManager(
             if (encryptionMode) encrypt(bytesIn, tag)
             else decrypt(bytesIn, tag).also { decodedAssociatedData = it }
         }
+    }
+
+    init {
+        TinkConfig.register()
     }
 
 }

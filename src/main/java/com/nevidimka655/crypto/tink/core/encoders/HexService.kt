@@ -1,8 +1,8 @@
-package com.nevidimka655.crypto.tink.domain.usecase.encoder
+package com.nevidimka655.crypto.tink.core.encoders
 
 import com.google.crypto.tink.subtle.Hex
 
-class HexUseCase {
+class HexService {
 
     fun encode(bytes: ByteArray): String {
         return Hex.encode(bytes)

@@ -1,12 +1,12 @@
-package com.nevidimka655.crypto.tink.domain.usecase
+package com.nevidimka655.crypto.tink.data.parsers
 
 import com.google.crypto.tink.Aead
 import com.google.crypto.tink.KeysetHandle
 import com.google.crypto.tink.TinkProtoKeysetFormat
-import com.nevidimka655.crypto.tink.domain.usecase.encoder.HexUseCase
+import com.nevidimka655.crypto.tink.core.encoders.HexService
 
-class ParseKeysetByAeadUseCase(
-    private val hexUseCase: HexUseCase
+class ParseKeysetByAeadService(
+    private val hexService: HexService
 ) {
 
     fun parse(
@@ -14,7 +14,7 @@ class ParseKeysetByAeadUseCase(
         aead: Aead,
         associatedData: ByteArray
     ): KeysetHandle {
-        val encryptedKeyset = hexUseCase.decode(hex = serializedKeyset)
+        val encryptedKeyset = hexService.decode(hex = serializedKeyset)
         return TinkProtoKeysetFormat.parseEncryptedKeyset(
             /* serializedEncryptedKeyset = */ encryptedKeyset,
             /* keysetEncryptionAead = */ aead,

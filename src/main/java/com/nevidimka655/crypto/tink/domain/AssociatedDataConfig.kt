@@ -1,4 +1,4 @@
-package com.nevidimka655.crypto.tink.domain.model
+package com.nevidimka655.crypto.tink.domain
 
 import java.io.File
 

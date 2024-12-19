@@ -1,4 +1,4 @@
-package com.nevidimka655.crypto.tink
+package com.nevidimka655.crypto.tink.data
 
 import com.google.crypto.tink.aead.AeadConfig
 import com.google.crypto.tink.daead.DeterministicAeadConfig

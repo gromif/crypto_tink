@@ -1,8 +1,8 @@
-package com.nevidimka655.crypto.tink.domain.usecase.hash
+package com.nevidimka655.crypto.tink.core.hash
 
 import java.security.MessageDigest
 
-class Sha256UseCase {
+class Sha256Service {
 
     fun compute(value: ByteArray): ByteArray = MessageDigest.getInstance("SHA-256")
         .digest(value)
