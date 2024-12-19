@@ -1,40 +1,66 @@
 package com.nevidimka655.crypto.tink
 
+import com.google.crypto.tink.Parameters
+import com.google.crypto.tink.aead.AeadParameters
+import com.google.crypto.tink.aead.PredefinedAeadParameters
+import com.google.crypto.tink.daead.DeterministicAeadParameters
+import com.google.crypto.tink.daead.PredefinedDeterministicAeadParameters
+import com.google.crypto.tink.prf.PredefinedPrfParameters
+import com.google.crypto.tink.prf.PrfParameters
+import com.google.crypto.tink.streamingaead.PredefinedStreamingAeadParameters
+import com.google.crypto.tink.streamingaead.StreamingAeadParameters
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
+
+private typealias AeadParams = PredefinedAeadParameters
+private typealias DeterministicParams = PredefinedDeterministicAeadParameters
+private typealias StreamingParams = PredefinedStreamingAeadParameters
+private typealias PrfParams = PredefinedPrfParameters
 
 object KeysetTemplates {
 
     @Serializable
-    enum class AEAD {
-        @SerialName("a") AES128_EAX,
-        @SerialName("b") AES128_CTR_HMAC_SHA256,
-        @SerialName("c") CHACHA20_POLY1305,
-        @SerialName("d") AES128_GCM,
-        @SerialName("e") AES256_EAX,
-        @SerialName("f") AES256_CTR_HMAC_SHA256,
-        @SerialName("g") XCHACHA20_POLY1305,
-        @SerialName("h") AES256_GCM
+    enum class AEAD(val params: Parameters) {
+        @SerialName("a") AES128_EAX(AeadParams.AES128_EAX),
+        @SerialName("b") AES256_EAX(AeadParams.AES256_EAX),
+
+        @SerialName("c") AES128_GCM(AeadParams.AES128_GCM),
+        @SerialName("d") AES256_GCM(AeadParams.AES256_GCM),
+
+        @SerialName("e") AES128_CTR_HMAC_SHA256(AeadParams.AES128_CTR_HMAC_SHA256),
+        @SerialName("f") AES256_CTR_HMAC_SHA256(AeadParams.AES256_CTR_HMAC_SHA256),
+
+        @SerialName("g") CHACHA20_POLY1305(AeadParams.CHACHA20_POLY1305),
+        @SerialName("h") XCHACHA20_POLY1305(AeadParams.XCHACHA20_POLY1305),
+
+        @SerialName("i") XAES_256_GCM_160_BIT_NONCE_NO_PREFIX(AeadParams.XAES_256_GCM_160_BIT_NONCE_NO_PREFIX),
+        @SerialName("j") XAES_256_GCM_192_BIT_NONCE(AeadParams.XAES_256_GCM_192_BIT_NONCE),
+        @SerialName("k") XAES_256_GCM_192_BIT_NONCE_NO_PREFIX(AeadParams.XAES_256_GCM_192_BIT_NONCE_NO_PREFIX)
     }
 
     @Serializable
-    enum class DeterministicAEAD { @SerialName("a") AES256_SIV }
-
-    @Serializable
-    enum class Stream(val uniqueId: Int) {
-        @SerialName("a") AES128_CTR_HMAC_SHA256_1MB(uniqueId = 2000),
-        @SerialName("b") AES128_GCM_HKDF_1MB(uniqueId = 2001),
-        @SerialName("c") AES256_CTR_HMAC_SHA256_1MB(uniqueId = 2002),
-        @SerialName("d") AES256_GCM_HKDF_1MB(uniqueId = 2003),
-        @SerialName("e") AES128_CTR_HMAC_SHA256_4KB(uniqueId = 2004),
-        @SerialName("f") AES128_GCM_HKDF_4KB(uniqueId = 2005),
-        @SerialName("g") AES256_CTR_HMAC_SHA256_4KB(uniqueId = 2006),
-        @SerialName("h") AES256_GCM_HKDF_4KB(uniqueId = 2007)
+    enum class DeterministicAEAD(val params: Parameters) {
+        @SerialName("a") AES256_SIV(DeterministicParams.AES256_SIV)
     }
 
-    // PrfKeyTemplates
-    enum class PRF(val uniqueId: Int) {
-        HKDF_SHA256(uniqueId = 1000)
+    @Serializable
+    enum class Stream(val params: Parameters) {
+        @SerialName("a") AES128_CTR_HMAC_SHA256_1MB(StreamingParams.AES128_CTR_HMAC_SHA256_1MB),
+        @SerialName("b") AES128_CTR_HMAC_SHA256_4KB(StreamingParams.AES128_CTR_HMAC_SHA256_4KB),
+
+        @SerialName("c") AES128_GCM_HKDF_1MB(StreamingParams.AES128_GCM_HKDF_1MB),
+        @SerialName("d") AES128_GCM_HKDF_4KB(StreamingParams.AES128_GCM_HKDF_4KB),
+
+        @SerialName("e") AES256_CTR_HMAC_SHA256_1MB(StreamingParams.AES256_CTR_HMAC_SHA256_1MB),
+        @SerialName("f") AES256_CTR_HMAC_SHA256_4KB(StreamingParams.AES256_CTR_HMAC_SHA256_4KB),
+
+        @SerialName("g") AES256_GCM_HKDF_1MB(StreamingParams.AES256_GCM_HKDF_1MB),
+        @SerialName("h") AES256_GCM_HKDF_4KB(StreamingParams.AES256_GCM_HKDF_4KB)
+    }
+
+    @Serializable
+    enum class PRF(val params: Parameters) {
+        @SerialName("a") HKDF_SHA256(PrfParams.HKDF_SHA256)
     }
 
 }
