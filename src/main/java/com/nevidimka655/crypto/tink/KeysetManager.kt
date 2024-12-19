@@ -5,6 +5,7 @@ import androidx.collection.SparseArrayCompat
 import com.google.crypto.tink.KeysetHandle
 import com.google.crypto.tink.Parameters
 import com.google.crypto.tink.subtle.AesGcmJce
+import com.nevidimka655.crypto.tink.domain.model.AssociatedDataConfig
 import com.nevidimka655.crypto.tink.domain.model.keyset.KeysetFactory
 import com.nevidimka655.crypto.tink.extensions.aeadPrimitive
 import com.nevidimka655.crypto.tink.extensions.sha384
@@ -17,12 +18,6 @@ class KeysetManager(
 ) {
     private val keysetList = SparseArrayCompat<KeysetHandle>()
     val dataFile get() = associatedDataConfig.dataFile
-
-    data class AssociatedDataConfig(
-        val dataFile: File,
-        val dataLength: Int,
-        val dataPasswordHashLength: Int
-    )
 
     private var decodedAssociatedData: ByteArray? = null
     val associatedData
