@@ -8,8 +8,6 @@ import com.google.crypto.tink.subtle.AesGcmJce
 import com.nevidimka655.crypto.tink.domain.model.AssociatedDataConfig
 import com.nevidimka655.crypto.tink.domain.model.keyset.KeysetFactory
 import com.nevidimka655.crypto.tink.extensions.aeadPrimitive
-import com.nevidimka655.crypto.tink.extensions.sha384
-import java.io.File
 import java.security.SecureRandom
 
 class KeysetManager(
@@ -42,7 +40,7 @@ class KeysetManager(
 
     fun initEncryptedAssociatedData(rawPassword: String) {
         if (dataFile.exists()) {
-            val password = HashStringGenerator.extendString(
+            /*val password = HashStringGenerator.extendString(
                 rawPassword, associatedDataConfig.dataPasswordHashLength
             )
             val aead = AesGcmJce(password)
@@ -52,12 +50,12 @@ class KeysetManager(
                 if (decodedBytes.size == associatedDataConfig.dataLength) {
                     decodedAssociatedData = decodedBytes
                 }
-            }
+            }*/
         }
     }
 
     fun encryptAssociatedData(rawPassword: String) {
-        val password = HashStringGenerator.extendString(
+        /*val password = HashStringGenerator.extendString(
             rawPassword, associatedDataConfig.dataPasswordHashLength
         )
         val aead = AesGcmJce(password)
@@ -66,7 +64,7 @@ class KeysetManager(
             it.write(
                 aead.encrypt(byteArray, dataFile.name.toByteArray())
             )
-        }
+        }*/
     }
 
     fun decryptAssociatedData() {
@@ -114,7 +112,8 @@ class KeysetManager(
             keyParams = KeysetTemplates.AEAD.AES256_GCM.params
         ).aeadPrimitive()
         return with(aead) {
-            val tag = authenticationTag.sha384()
+            //val tag = authenticationTag.sha384()
+            val tag = TODO()
             if (encryptionMode) encrypt(bytesIn, tag)
             else decrypt(bytesIn, tag).also { decodedAssociatedData = it }
         }

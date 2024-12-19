@@ -1,6 +1,5 @@
 package com.nevidimka655.crypto.tink
 
-import com.nevidimka655.crypto.tink.extensions.sha384
 import kotlin.experimental.xor
 
 object HashStringGenerator {
@@ -8,7 +7,7 @@ object HashStringGenerator {
     fun extendString(string: String, targetSize: Int): ByteArray {
         val bytes = string.toByteArray()
         if (string.length == targetSize) return bytes
-        val sha384 = string.sha384()
+        val sha384 = bytes
         val bytesMutable = mutableListOf<Byte>()
         val originalBytesCount = bytes.size
         val shaBytesCount = sha384.size
