@@ -6,14 +6,21 @@ import com.google.crypto.tink.KeysetHandle
 import com.google.crypto.tink.Mac
 import com.google.crypto.tink.RegistryConfiguration
 import com.google.crypto.tink.StreamingAead
-import com.google.crypto.tink.prf.PrfSet
-import kotlin.jvm.java
+import com.google.crypto.tink.prf.Prf
 
-fun KeysetHandle.streamingAeadPrimitive(): StreamingAead = primitive()
-fun KeysetHandle.aeadPrimitive(): Aead = primitive()
-fun KeysetHandle.deterministicAeadPrimitive(): DeterministicAead = primitive()
-fun KeysetHandle.macPrimitive(): Mac = primitive()
-fun KeysetHandle.prfPrimitive(): PrfSet = primitive()
+fun KeysetHandle.streamingAeadPrimitive(): StreamingAead =
+    this.getPrimitive(RegistryConfiguration.get(), StreamingAead::class.java)
 
-private inline fun <reified T> KeysetHandle.primitive(): T =
-    getPrimitive(RegistryConfiguration.get(), T::class.javaClass) as T
+fun KeysetHandle.aeadPrimitive(): Aead =
+    this.getPrimitive(RegistryConfiguration.get(), Aead::class.java)
+
+fun KeysetHandle.deterministicAeadPrimitive(): DeterministicAead = this.getPrimitive(
+    RegistryConfiguration.get(),
+    DeterministicAead::class.java
+)
+
+fun KeysetHandle.macPrimitive(): Mac =
+    this.getPrimitive(RegistryConfiguration.get(), Mac::class.java)
+
+fun KeysetHandle.prfPrimitive(): Prf =
+    this.getPrimitive(RegistryConfiguration.get(), Prf::class.java)
