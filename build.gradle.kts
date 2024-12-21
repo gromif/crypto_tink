@@ -25,8 +25,6 @@ kotlin {
 }
 
 dependencies {
-    api(libs.androidx.core.ktx)
-    api(libs.androidx.appcompat)
     api(libs.google.crypto.tink)
     api(libs.kotlin.serialization)
 }

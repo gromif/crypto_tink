@@ -1,7 +1,7 @@
 package com.nevidimka655.crypto.tink.data
 
 import android.os.Build
-import androidx.collection.SparseArrayCompat
+import android.util.SparseArray
 import com.google.crypto.tink.KeysetHandle
 import com.google.crypto.tink.Parameters
 import com.google.crypto.tink.config.TinkConfig
@@ -15,7 +15,7 @@ class KeysetManager(
     private val keysetFactory: KeysetFactory,
     private val associatedDataConfig: AssociatedDataConfig
 ) {
-    private val keysetList = SparseArrayCompat<KeysetHandle>()
+    private val keysetList = SparseArray<KeysetHandle>()
     val dataFile get() = associatedDataConfig.dataFile
 
     private var decodedAssociatedData: ByteArray? = null
