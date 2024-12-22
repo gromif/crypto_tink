@@ -1,6 +1,6 @@
 plugins {
     alias(libs.plugins.astracrypt.android.library)
-    alias(libs.plugins.kotlin.serialization)
+    alias(libs.plugins.astracrypt.kotlin.serialization)
 }
 
 android {
@@ -9,5 +9,4 @@ android {
 
 dependencies {
     api(libs.google.crypto.tink)
-    api(libs.kotlin.serialization)
 }
