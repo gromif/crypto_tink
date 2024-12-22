@@ -1,27 +1,10 @@
 plugins {
-    alias(libs.plugins.androidLibrary)
-    alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.astracrypt.android.library)
     alias(libs.plugins.kotlin.serialization)
 }
 
 android {
     namespace = "com.nevidimka655.crypto.tink"
-    compileSdk = project.property("compileSdk").toString().toInt()
-
-    defaultConfig {
-        minSdk = project.property("minSdk").toString().toInt()
-        consumerProguardFiles("consumer-rules.pro")
-    }
-
-    buildTypes {
-        release {
-            isMinifyEnabled = false
-        }
-    }
-}
-
-kotlin {
-    jvmToolchain(project.property("kotlinJvmToolchainVersion").toString().toInt())
 }
 
 dependencies {
