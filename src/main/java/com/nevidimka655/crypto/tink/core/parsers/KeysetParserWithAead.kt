@@ -3,10 +3,10 @@ package com.nevidimka655.crypto.tink.core.parsers
 import com.google.crypto.tink.Aead
 import com.google.crypto.tink.KeysetHandle
 import com.google.crypto.tink.TinkProtoKeysetFormat
-import com.nevidimka655.crypto.tink.core.encoders.HexService
+import com.nevidimka655.crypto.tink.core.encoders.HexUtil
 
 class KeysetParserWithAead(
-    private val hexService: HexService
+    private val hexUtil: HexUtil
 ) {
 
     operator fun invoke(
@@ -14,7 +14,7 @@ class KeysetParserWithAead(
         aead: Aead,
         associatedData: ByteArray
     ): KeysetHandle {
-        val encryptedKeyset = hexService.decode(hex = serializedKeyset)
+        val encryptedKeyset = hexUtil.decode(hex = serializedKeyset)
         return TinkProtoKeysetFormat.parseEncryptedKeyset(
             /* serializedEncryptedKeyset = */ encryptedKeyset,
             /* keysetEncryptionAead = */ aead,

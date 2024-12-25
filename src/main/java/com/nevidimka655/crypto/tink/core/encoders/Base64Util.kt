@@ -2,7 +2,7 @@ package com.nevidimka655.crypto.tink.core.encoders
 
 import com.google.crypto.tink.subtle.Base64
 
-class Base64Service {
+class Base64Util {
 
     fun encode(bytes: ByteArray): String = Base64.encode(bytes)
     fun decode(value: String): ByteArray = Base64.decode(value)

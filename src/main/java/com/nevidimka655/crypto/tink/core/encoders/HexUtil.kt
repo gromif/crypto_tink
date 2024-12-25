@@ -2,7 +2,7 @@ package com.nevidimka655.crypto.tink.core.encoders
 
 import com.google.crypto.tink.subtle.Hex
 
-class HexService {
+class HexUtil {
 
     fun encode(bytes: ByteArray): String {
         return Hex.encode(bytes)
