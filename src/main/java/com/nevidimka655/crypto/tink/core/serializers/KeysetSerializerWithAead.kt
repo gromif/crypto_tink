@@ -1,15 +1,15 @@
-package com.nevidimka655.crypto.tink.data.serializers
+package com.nevidimka655.crypto.tink.core.serializers
 
 import com.google.crypto.tink.Aead
 import com.google.crypto.tink.KeysetHandle
 import com.google.crypto.tink.TinkProtoKeysetFormat
 import com.nevidimka655.crypto.tink.core.encoders.HexService
 
-class SerializeKeysetByAeadService(
+class KeysetSerializerWithAead(
     private val hexService: HexService
 ) {
 
-    fun serialize(
+    operator fun invoke(
         keysetHandle: KeysetHandle,
         aead: Aead,
         associatedData: ByteArray

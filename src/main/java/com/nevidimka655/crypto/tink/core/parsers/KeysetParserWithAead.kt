@@ -1,15 +1,15 @@
-package com.nevidimka655.crypto.tink.data.parsers
+package com.nevidimka655.crypto.tink.core.parsers
 
 import com.google.crypto.tink.Aead
 import com.google.crypto.tink.KeysetHandle
 import com.google.crypto.tink.TinkProtoKeysetFormat
 import com.nevidimka655.crypto.tink.core.encoders.HexService
 
-class ParseKeysetByAeadService(
+class KeysetParserWithAead(
     private val hexService: HexService
 ) {
 
-    fun parse(
+    operator fun invoke(
         serializedKeyset: String,
         aead: Aead,
         associatedData: ByteArray

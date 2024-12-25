@@ -1,19 +1,19 @@
-package com.nevidimka655.crypto.tink.data.serializers
+package com.nevidimka655.crypto.tink.core.parsers
 
 import com.google.crypto.tink.KeysetHandle
 import com.nevidimka655.crypto.tink.data.keyset.KeysetAeadFactory
 
-class SerializeKeysetByKeyService(
-    private val serializeKeysetByAeadService: SerializeKeysetByAeadService,
+class KeysetParserWithKey(
+    private val keysetParserWithAead: KeysetParserWithAead,
     private val keysetAeadFactory: KeysetAeadFactory
 ) {
 
-    fun serialize(
-        keysetHandle: KeysetHandle,
+    operator fun invoke(
+        serializedKeyset: String,
         key: ByteArray,
         associatedData: ByteArray
-    ): String = serializeKeysetByAeadService.serialize(
-        keysetHandle = keysetHandle,
+    ): KeysetHandle = keysetParserWithAead(
+        serializedKeyset = serializedKeyset,
         aead = keysetAeadFactory.invoke(key = key),
         associatedData = associatedData
     )
