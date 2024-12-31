@@ -30,7 +30,11 @@ class KeysetManager(
     suspend fun stream(aead: KeysetTemplates.Stream, tag: String = ""): KeysetHandle =
         getKeyset(tag = tag, keyParams = aead.params)
 
-    suspend fun getKeyset(tag: String, keyParams: Parameters): KeysetHandle {
+    suspend fun getKeyset(
+        tag: String,
+        associatedData: ByteArray = this.associatedData,
+        keyParams: Parameters
+    ): KeysetHandle {
         val keysetHash = tag.hashCode()
         return keysetList[keysetHash] ?: keysetFactory.create(
             tag = tag,
