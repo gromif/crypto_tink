@@ -56,7 +56,10 @@ object KeysetTemplates {
 
     @Serializable
     enum class PRF(val params: Parameters) {
-        @SerialName("a") HKDF_SHA256(PrfParams.HKDF_SHA256)
+        @SerialName("a") HKDF_SHA256(PrfParams.HKDF_SHA256),
+        @SerialName("b") HMAC_SHA256_PRF(PrfParams.HMAC_SHA256_PRF),
+        @SerialName("c") HMAC_SHA512_PRF(PrfParams.HMAC_SHA512_PRF),
+        @SerialName("d") AES_CMAC_PRF(PrfParams.AES_CMAC_PRF),
     }
 
 }
