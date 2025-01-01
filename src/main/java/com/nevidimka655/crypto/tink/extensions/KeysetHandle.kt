@@ -8,18 +8,20 @@ import com.google.crypto.tink.RegistryConfiguration
 import com.google.crypto.tink.StreamingAead
 import com.google.crypto.tink.prf.PrfSet
 
+private val REGISTRY = RegistryConfiguration.get()
+
 fun KeysetHandle.streamingAeadPrimitive(): StreamingAead =
-    this.getPrimitive(RegistryConfiguration.get(), StreamingAead::class.java)
+    this.getPrimitive(REGISTRY, StreamingAead::class.java)
 
 fun KeysetHandle.aeadPrimitive(): Aead =
-    this.getPrimitive(RegistryConfiguration.get(), Aead::class.java)
+    this.getPrimitive(REGISTRY, Aead::class.java)
 
 fun KeysetHandle.deterministicAeadPrimitive(): DeterministicAead = this.getPrimitive(
-    RegistryConfiguration.get(),
+    REGISTRY,
     DeterministicAead::class.java
 )
 
 fun KeysetHandle.macPrimitive(): Mac =
-    this.getPrimitive(RegistryConfiguration.get(), Mac::class.java)
+    this.getPrimitive(REGISTRY, Mac::class.java)
 
-fun KeysetHandle.prf(): PrfSet = getPrimitive(RegistryConfiguration.get(), PrfSet::class.java)
+fun KeysetHandle.prf(): PrfSet = getPrimitive(REGISTRY, PrfSet::class.java)
