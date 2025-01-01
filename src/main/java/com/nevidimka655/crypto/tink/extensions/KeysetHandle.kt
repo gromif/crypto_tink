@@ -9,15 +9,11 @@ import com.google.crypto.tink.prf.PrfSet
 
 private val REGISTRY = RegistryConfiguration.get()
 
-fun KeysetHandle.streamingAead(): StreamingAead =
-    this.getPrimitive(REGISTRY, StreamingAead::class.java)
+fun KeysetHandle.streamingAead(): StreamingAead = getPrimitive(REGISTRY, StreamingAead::class.java)
 
-fun KeysetHandle.aead(): Aead =
-    this.getPrimitive(REGISTRY, Aead::class.java)
+fun KeysetHandle.aead(): Aead = getPrimitive(REGISTRY, Aead::class.java)
 
-fun KeysetHandle.deterministicAead(): DeterministicAead = this.getPrimitive(
-    REGISTRY,
-    DeterministicAead::class.java
-)
+fun KeysetHandle.deterministicAead(): DeterministicAead =
+    getPrimitive(REGISTRY, DeterministicAead::class.java)
 
 fun KeysetHandle.prf(): PrfSet = getPrimitive(REGISTRY, PrfSet::class.java)
