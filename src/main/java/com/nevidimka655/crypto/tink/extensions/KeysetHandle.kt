@@ -12,7 +12,7 @@ private val REGISTRY = RegistryConfiguration.get()
 fun KeysetHandle.streamingAeadPrimitive(): StreamingAead =
     this.getPrimitive(REGISTRY, StreamingAead::class.java)
 
-fun KeysetHandle.aeadPrimitive(): Aead =
+fun KeysetHandle.aead(): Aead =
     this.getPrimitive(REGISTRY, Aead::class.java)
 
 fun KeysetHandle.deterministicAead(): DeterministicAead = this.getPrimitive(

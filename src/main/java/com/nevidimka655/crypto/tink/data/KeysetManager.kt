@@ -8,7 +8,7 @@ import com.google.crypto.tink.config.TinkConfig
 import com.nevidimka655.crypto.tink.domain.AssociatedDataConfig
 import com.nevidimka655.crypto.tink.domain.KeysetTemplates
 import com.nevidimka655.crypto.tink.domain.keyset.KeysetFactory
-import com.nevidimka655.crypto.tink.extensions.aeadPrimitive
+import com.nevidimka655.crypto.tink.extensions.aead
 import java.security.SecureRandom
 
 class KeysetManager(
@@ -115,7 +115,7 @@ class KeysetManager(
         val aead = getKeyset(
             tag = TODO(),
             keyParams = KeysetTemplates.AEAD.AES256_GCM.params
-        ).aeadPrimitive()
+        ).aead()
         return with(aead) {
             //val tag = authenticationTag.sha384()
             val tag = TODO()
