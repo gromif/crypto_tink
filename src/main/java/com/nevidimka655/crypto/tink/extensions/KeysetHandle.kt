@@ -22,4 +22,4 @@ fun KeysetHandle.deterministicAeadPrimitive(): DeterministicAead = this.getPrimi
 fun KeysetHandle.macPrimitive(): Mac =
     this.getPrimitive(RegistryConfiguration.get(), Mac::class.java)
 
-fun KeysetHandle.prfPrimitive(): PrfSet = getPrimitive(RegistryConfiguration.get(), PrfSet::class.java)
+fun KeysetHandle.prf(): PrfSet = getPrimitive(RegistryConfiguration.get(), PrfSet::class.java)
