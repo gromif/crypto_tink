@@ -9,7 +9,7 @@ import com.google.crypto.tink.prf.PrfSet
 
 private val REGISTRY = RegistryConfiguration.get()
 
-fun KeysetHandle.streamingAeadPrimitive(): StreamingAead =
+fun KeysetHandle.streamingAead(): StreamingAead =
     this.getPrimitive(REGISTRY, StreamingAead::class.java)
 
 fun KeysetHandle.aead(): Aead =
