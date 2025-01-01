@@ -15,7 +15,7 @@ fun KeysetHandle.streamingAeadPrimitive(): StreamingAead =
 fun KeysetHandle.aeadPrimitive(): Aead =
     this.getPrimitive(REGISTRY, Aead::class.java)
 
-fun KeysetHandle.deterministicAeadPrimitive(): DeterministicAead = this.getPrimitive(
+fun KeysetHandle.deterministicAead(): DeterministicAead = this.getPrimitive(
     REGISTRY,
     DeterministicAead::class.java
 )
