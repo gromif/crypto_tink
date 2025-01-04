@@ -24,14 +24,15 @@ class KeysetManager(
     suspend fun getKeyset(
         tag: String,
         associatedData: ByteArray = associatedDataManager.associatedData,
-        keyParams: Parameters
+        keyParams: Parameters,
+        cache: Boolean = true
     ): KeysetHandle {
         val keysetHash = tag.hashCode()
         return keysetList[keysetHash] ?: keysetFactory.create(
             tag = tag,
             keyParams = keyParams,
             associatedData = associatedData
-        ).also { keysetList.append(keysetHash, it) }
+        ).also { if (cache) keysetList.append(keysetHash, it) }
     }
 
     suspend fun transformAssociatedDataToWorkInstance(
