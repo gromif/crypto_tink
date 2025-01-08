@@ -49,7 +49,7 @@ class AssociatedDataManager(
     }
 
     private fun generate(): ByteArray {
-        val newSize = Random.nextInt(from = 32, until = 65)
+        val newSize = Random.nextInt(from = 16, until = 49)
         val bytes = ByteArray(newSize)
         run {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) SecureRandom.getInstanceStrong()
