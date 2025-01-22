@@ -9,5 +9,7 @@ android {
 }
 
 dependencies {
-    api(libs.google.crypto.tink)
+    api(libs.google.crypto.tink) {
+        exclude(group = "androidx.annotation")
+    }
 }
