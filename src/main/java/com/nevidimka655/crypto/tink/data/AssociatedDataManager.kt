@@ -20,7 +20,7 @@ class AssociatedDataManager(
         cached ?: initAssociatedData().also { cached = it }
     }
 
-    fun decryptWithPassword(password: String, prfSet: PrfSet) {
+    suspend fun decryptWithPassword(password: String, prfSet: PrfSet) = mutex.withLock {
         val aeadKey = prfSet.computePrimary(password.toByteArray(), AEAD_KEY_SIZE)
         val aeadAssociatedData = prfSet.computePrimary(password.toByteArray(), AEAD_NONCE_SIZE)
         val aead = XChaCha20Poly1305(aeadKey)
