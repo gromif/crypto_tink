@@ -44,13 +44,11 @@ class AssociatedDataManager(
 
     fun erase() = RandomAccessFile(associatedDataFile, "rws").use { it.write(generate()) }
 
-    private fun initAssociatedData(): ByteArray {
-        return if (associatedDataFile.exists()) associatedDataFile.readBytes()
-        else {
-            val bytes = generate()
+    private suspend fun initAssociatedData(): ByteArray = mutex.withLock {
+        if (associatedDataFile.exists()) associatedDataFile.readBytes()
+        else generate().also {
             associatedDataFile.createNewFile()
-            associatedDataFile.writeBytes(bytes)
-            bytes
+            associatedDataFile.writeBytes(it)
         }
     }
 
