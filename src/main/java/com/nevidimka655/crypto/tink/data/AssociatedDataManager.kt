@@ -16,7 +16,7 @@ class AssociatedDataManager(
     private val mutex = Mutex()
     private var cached: ByteArray? = null
 
-    suspend fun getAssociatedData() = mutex.withLock {
+    suspend fun getAssociatedData() = run {
         cached ?: initAssociatedData().also { cached = it }
     }
 
