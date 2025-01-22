@@ -38,10 +38,6 @@ class AssociatedDataManager(
 
     suspend fun decrypt() = associatedDataFile.writeBytes(getAssociatedData())
 
-    fun setExplicitly(data: ByteArray) {
-        cached = data
-    }
-
     fun erase() = RandomAccessFile(associatedDataFile, "rws").use { it.write(generate()) }
 
     private suspend fun initAssociatedData(): ByteArray = mutex.withLock {

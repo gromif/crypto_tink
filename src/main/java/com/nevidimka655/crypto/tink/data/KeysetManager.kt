@@ -38,14 +38,6 @@ class KeysetManager(
         ).also { if (cache) keysetList.append(keysetHash, it) }
     }
 
-    suspend fun transformAssociatedDataToWorkInstance(
-        bytesIn: ByteArray,
-        encryptionMode: Boolean,
-        authenticationTag: String
-    ): ByteArray {
-        return ByteArray(0)
-    }
-
     init {
         TinkConfig.register()
     }
