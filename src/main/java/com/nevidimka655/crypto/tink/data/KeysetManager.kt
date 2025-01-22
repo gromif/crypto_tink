@@ -12,8 +12,6 @@ class KeysetManager(
     private val associatedDataManager: AssociatedDataManager
 ) {
     private val keysetList = SparseArray<KeysetHandle>()
-    val associatedData get() = associatedDataManager.associatedData // TODO: Remove
-
 
     suspend fun aead(aead: KeysetTemplates.AEAD, tag: String = ""): KeysetHandle =
         getKeyset(tag = tag, keyParams = aead.params)
@@ -23,15 +21,16 @@ class KeysetManager(
 
     suspend fun getKeyset(
         tag: String,
-        associatedData: ByteArray = associatedDataManager.associatedData,
+        associatedData: ByteArray? = null,
         keyParams: Parameters,
         cache: Boolean = true
     ): KeysetHandle {
+        val ad = associatedData ?: associatedDataManager.getAssociatedData()
         val keysetHash = tag.hashCode()
         return keysetList[keysetHash] ?: keysetFactory.create(
             tag = tag,
             keyParams = keyParams,
-            associatedData = associatedData
+            associatedData = ad
         ).also { if (cache) keysetList.append(keysetHash, it) }
     }
 

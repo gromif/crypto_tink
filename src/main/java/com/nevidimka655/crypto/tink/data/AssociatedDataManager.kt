@@ -3,6 +3,8 @@ package com.nevidimka655.crypto.tink.data
 import android.os.Build
 import com.google.crypto.tink.prf.PrfSet
 import com.google.crypto.tink.subtle.XChaCha20Poly1305
+import kotlinx.coroutines.sync.Mutex
+import kotlinx.coroutines.sync.withLock
 import java.io.File
 import java.io.RandomAccessFile
 import java.security.SecureRandom
@@ -11,8 +13,12 @@ import kotlin.random.Random
 class AssociatedDataManager(
     private val associatedDataFile: File
 ) {
+    private val mutex = Mutex()
     private var cached: ByteArray? = null
-    val associatedData get() = cached ?: initAssociatedData().also { cached = it }
+
+    suspend fun getAssociatedData() = mutex.withLock {
+        cached ?: initAssociatedData().also { cached = it }
+    }
 
     fun decryptWithPassword(password: String, prfSet: PrfSet) {
         val aeadKey = prfSet.computePrimary(password.toByteArray(), AEAD_KEY_SIZE)
@@ -22,15 +28,15 @@ class AssociatedDataManager(
         cached = aead.decrypt(encryptedBytes, aeadAssociatedData)
     }
 
-    fun encryptWithPassword(password: String, prfSet: PrfSet) {
+    suspend fun encryptWithPassword(password: String, prfSet: PrfSet) {
         val aeadKey = prfSet.computePrimary(password.toByteArray(), AEAD_KEY_SIZE)
         val aeadAssociatedData = prfSet.computePrimary(password.toByteArray(), AEAD_NONCE_SIZE)
         val aead = XChaCha20Poly1305(aeadKey)
-        val encryptedBytes = aead.encrypt(associatedData, aeadAssociatedData)
+        val encryptedBytes = aead.encrypt(getAssociatedData(), aeadAssociatedData)
         associatedDataFile.writeBytes(encryptedBytes)
     }
 
-    fun decrypt() = associatedDataFile.writeBytes(associatedData)
+    suspend fun decrypt() = associatedDataFile.writeBytes(getAssociatedData())
 
     fun setExplicitly(data: ByteArray) {
         cached = data
