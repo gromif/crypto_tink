@@ -3,7 +3,7 @@ package io.gromif.crypto.tink.core.serializers
 import com.google.crypto.tink.Aead
 import com.google.crypto.tink.KeysetHandle
 import com.google.crypto.tink.TinkProtoKeysetFormat
-import io.gromif.crypto.tink.core.encoders.HexUtil
+import io.gromif.crypto.tink.encoders.HexUtil
 
 class KeysetSerializerWithAead(
     private val hexUtil: HexUtil

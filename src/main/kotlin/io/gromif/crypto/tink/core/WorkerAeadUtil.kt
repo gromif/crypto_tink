@@ -2,7 +2,7 @@ package io.gromif.crypto.tink.core
 
 import com.google.crypto.tink.Aead
 import com.google.crypto.tink.integration.android.AndroidKeystore
-import io.gromif.crypto.tink.core.encoders.Base64Util
+import io.gromif.crypto.tink.encoders.Base64Util
 
 class WorkerAeadUtil(
     private val base64Util: Base64Util,

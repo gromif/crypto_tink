@@ -3,7 +3,7 @@ package io.gromif.crypto.tink.core.parsers
 import com.google.crypto.tink.InsecureSecretKeyAccess
 import com.google.crypto.tink.KeysetHandle
 import com.google.crypto.tink.TinkProtoKeysetFormat
-import io.gromif.crypto.tink.core.encoders.HexUtil
+import io.gromif.crypto.tink.encoders.HexUtil
 
 class KeysetParser(
     private val hexUtil: HexUtil
