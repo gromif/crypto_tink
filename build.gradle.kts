@@ -5,7 +5,7 @@ plugins {
 }
 
 android {
-    namespace = "com.nevidimka655.crypto.tink"
+    namespace = "io.gromif.crypto.tink"
 }
 
 dependencies {
