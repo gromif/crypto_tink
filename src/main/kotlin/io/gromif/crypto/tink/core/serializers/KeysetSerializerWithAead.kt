@@ -3,10 +3,10 @@ package io.gromif.crypto.tink.core.serializers
 import com.google.crypto.tink.Aead
 import com.google.crypto.tink.KeysetHandle
 import com.google.crypto.tink.TinkProtoKeysetFormat
-import io.gromif.crypto.tink.encoders.HexUtil
+import io.gromif.crypto.tink.encoders.HexEncoder
 
 class KeysetSerializerWithAead(
-    private val hexUtil: HexUtil
+    private val hexEncoder: HexEncoder
 ) {
 
     operator fun invoke(
@@ -18,7 +18,7 @@ class KeysetSerializerWithAead(
         /* keysetEncryptionAead = */ aead,
         /* associatedData = */ associatedData
     ).let {
-        hexUtil.encode(bytes = it)
+        hexEncoder.encode(bytes = it)
     }
 
 }

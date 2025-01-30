@@ -2,7 +2,7 @@ package io.gromif.crypto.tink.encoders
 
 import com.google.crypto.tink.subtle.Hex
 
-class HexUtil : Encoder {
+class HexEncoder : Encoder {
 
     override fun encode(bytes: ByteArray): String {
         return Hex.encode(bytes)

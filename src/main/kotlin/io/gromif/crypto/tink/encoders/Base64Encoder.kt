@@ -2,7 +2,7 @@ package io.gromif.crypto.tink.encoders
 
 import com.google.crypto.tink.subtle.Base64
 
-class Base64Util : Encoder {
+class Base64Encoder : Encoder {
 
     override fun encode(bytes: ByteArray): String = Base64.encode(bytes)
     override fun decode(value: String): ByteArray = Base64.decode(value)
