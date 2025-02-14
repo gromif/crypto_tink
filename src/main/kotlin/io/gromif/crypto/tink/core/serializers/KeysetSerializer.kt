@@ -3,10 +3,10 @@ package io.gromif.crypto.tink.core.serializers
 import com.google.crypto.tink.InsecureSecretKeyAccess
 import com.google.crypto.tink.KeysetHandle
 import com.google.crypto.tink.TinkProtoKeysetFormat
-import io.gromif.crypto.tink.encoders.HexEncoder
+import io.gromif.crypto.tink.encoders.Encoder
 
 class KeysetSerializer(
-    private val hexEncoder: HexEncoder
+    private val encoder: Encoder
 ) {
 
     operator fun invoke(item: KeysetHandle): String {
@@ -14,7 +14,7 @@ class KeysetSerializer(
             /* keysetHandle = */ item,
             /* access = */ InsecureSecretKeyAccess.get()
         ).let {
-            hexEncoder.encode(bytes = it)
+            encoder.encode(bytes = it)
         }
     }
 
