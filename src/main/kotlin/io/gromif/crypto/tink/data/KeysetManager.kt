@@ -4,8 +4,8 @@ import android.util.SparseArray
 import com.google.crypto.tink.KeysetHandle
 import com.google.crypto.tink.Parameters
 import com.google.crypto.tink.config.TinkConfig
-import io.gromif.crypto.tink.domain.KeysetTemplates
-import io.gromif.crypto.tink.domain.keyset.KeysetFactory
+import io.gromif.crypto.tink.model.KeysetFactory
+import io.gromif.crypto.tink.model.KeysetTemplates
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 

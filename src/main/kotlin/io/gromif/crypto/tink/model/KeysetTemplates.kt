@@ -1,4 +1,4 @@
-package io.gromif.crypto.tink.domain
+package io.gromif.crypto.tink.model
 
 import com.google.crypto.tink.Parameters
 import com.google.crypto.tink.aead.PredefinedAeadParameters

@@ -2,8 +2,8 @@ package io.gromif.crypto.tink.core
 
 import com.google.crypto.tink.prf.PrfSet
 import io.gromif.crypto.tink.data.KeysetManager
-import io.gromif.crypto.tink.domain.KeysetTemplates
 import io.gromif.crypto.tink.extensions.prf
+import io.gromif.crypto.tink.model.KeysetTemplates
 
 private const val KEYSET_TAG = "9pY%MA@t"
 private val KEYSET_AD = "]|d!4<I5".toByteArray()
