@@ -2,9 +2,9 @@ package io.gromif.crypto.tink.core.hash
 
 import java.security.MessageDigest
 
-class Sha384Util {
+class Sha384Util : HashUtil {
 
-    fun compute(value: ByteArray): ByteArray = MessageDigest.getInstance("SHA-384")
+    override fun compute(value: ByteArray): ByteArray = MessageDigest.getInstance("SHA-384")
         .digest(value)
 
 }
