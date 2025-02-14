@@ -1,7 +1,7 @@
 package io.gromif.crypto.tink.core.utils
 
+import io.gromif.crypto.tink.core.encoders.Encoder
 import io.gromif.crypto.tink.core.hash.HashUtil
-import io.gromif.crypto.tink.encoders.Encoder
 import io.gromif.crypto.tink.model.KeysetIdUtil
 
 class DefaultKeystoreKeysetIdUtil(

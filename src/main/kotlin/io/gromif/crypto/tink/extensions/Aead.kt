@@ -1,7 +1,7 @@
 package io.gromif.crypto.tink.extensions
 
 import com.google.crypto.tink.Aead
-import io.gromif.crypto.tink.encoders.Encoder
+import io.gromif.crypto.tink.core.encoders.Encoder
 
 fun Aead.encryptAndEncode(
     value: String,

@@ -2,7 +2,7 @@ package io.gromif.crypto.tink.core
 
 import com.google.crypto.tink.Aead
 import com.google.crypto.tink.integration.android.AndroidKeystore
-import io.gromif.crypto.tink.encoders.Encoder
+import io.gromif.crypto.tink.core.encoders.Encoder
 
 class WorkerAeadUtil(
     private val encoder: Encoder,

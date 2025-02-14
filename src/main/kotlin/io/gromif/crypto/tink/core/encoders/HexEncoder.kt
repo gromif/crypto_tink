@@ -1,4 +1,4 @@
-package io.gromif.crypto.tink.encoders
+package io.gromif.crypto.tink.core.encoders
 
 import com.google.crypto.tink.subtle.Hex
 
