@@ -3,10 +3,10 @@ package io.gromif.crypto.tink.core.parsers
 import com.google.crypto.tink.Aead
 import com.google.crypto.tink.KeysetHandle
 import com.google.crypto.tink.TinkProtoKeysetFormat
-import io.gromif.crypto.tink.encoders.HexEncoder
+import io.gromif.crypto.tink.encoders.Encoder
 
 class KeysetParserWithAead(
-    private val hexEncoder: HexEncoder
+    private val encoder: Encoder
 ) {
 
     operator fun invoke(
@@ -14,7 +14,7 @@ class KeysetParserWithAead(
         aead: Aead,
         associatedData: ByteArray
     ): KeysetHandle {
-        val encryptedKeyset = hexEncoder.decode(hex = serializedKeyset)
+        val encryptedKeyset = encoder.decode(value = serializedKeyset)
         return TinkProtoKeysetFormat.parseEncryptedKeyset(
             /* serializedEncryptedKeyset = */ encryptedKeyset,
             /* keysetEncryptionAead = */ aead,
