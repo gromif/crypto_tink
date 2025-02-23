@@ -5,7 +5,6 @@ import com.google.crypto.tink.KeysetHandle
 import com.google.crypto.tink.Parameters
 import com.google.crypto.tink.config.TinkConfig
 import io.gromif.crypto.tink.model.KeysetFactory
-import io.gromif.crypto.tink.model.KeysetTemplates
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 
@@ -15,12 +14,6 @@ class KeysetManager(
 ) {
     private val mutex = Mutex()
     private val keysetList = SparseArray<KeysetHandle>()
-
-    suspend fun aead(aead: KeysetTemplates.AEAD, tag: String = ""): KeysetHandle =
-        getKeyset(tag = tag, keyParams = aead.params)
-
-    suspend fun stream(aead: KeysetTemplates.Stream, tag: String = ""): KeysetHandle =
-        getKeyset(tag = tag, keyParams = aead.params)
 
     suspend fun getKeyset(
         tag: String,
