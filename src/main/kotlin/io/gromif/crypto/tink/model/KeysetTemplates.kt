@@ -1,10 +1,13 @@
 package io.gromif.crypto.tink.model
 
-import com.google.crypto.tink.Parameters
+import com.google.crypto.tink.aead.AeadParameters
 import com.google.crypto.tink.aead.PredefinedAeadParameters
+import com.google.crypto.tink.daead.DeterministicAeadParameters
 import com.google.crypto.tink.daead.PredefinedDeterministicAeadParameters
 import com.google.crypto.tink.prf.PredefinedPrfParameters
+import com.google.crypto.tink.prf.PrfParameters
 import com.google.crypto.tink.streamingaead.PredefinedStreamingAeadParameters
+import com.google.crypto.tink.streamingaead.StreamingAeadParameters
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
@@ -16,7 +19,7 @@ private typealias PrfParams = PredefinedPrfParameters
 object KeysetTemplates {
 
     @Serializable
-    enum class AEAD(val params: Parameters) {
+    enum class AEAD(val params: AeadParameters) {
         @SerialName("a") AES128_EAX(AeadParams.AES128_EAX),
         @SerialName("b") AES256_EAX(AeadParams.AES256_EAX),
 
@@ -35,12 +38,12 @@ object KeysetTemplates {
     }
 
     @Serializable
-    enum class DeterministicAEAD(val params: Parameters) {
+    enum class DeterministicAEAD(val params: DeterministicAeadParameters) {
         @SerialName("a") AES256_SIV(DeterministicParams.AES256_SIV)
     }
 
     @Serializable
-    enum class Stream(val params: Parameters) {
+    enum class Stream(val params: StreamingAeadParameters) {
         @SerialName("a") AES128_CTR_HMAC_SHA256_1MB(StreamingParams.AES128_CTR_HMAC_SHA256_1MB),
         @SerialName("b") AES128_CTR_HMAC_SHA256_4KB(StreamingParams.AES128_CTR_HMAC_SHA256_4KB),
 
@@ -55,7 +58,7 @@ object KeysetTemplates {
     }
 
     @Serializable
-    enum class PRF(val params: Parameters) {
+    enum class PRF(val params: PrfParameters) {
         @SerialName("a") HKDF_SHA256(PrfParams.HKDF_SHA256),
         @SerialName("b") HMAC_SHA256_PRF(PrfParams.HMAC_SHA256_PRF),
         @SerialName("c") HMAC_SHA512_PRF(PrfParams.HMAC_SHA512_PRF),
