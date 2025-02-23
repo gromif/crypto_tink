@@ -1,6 +1,5 @@
 package io.gromif.crypto.tink.data
 
-import android.util.SparseArray
 import com.google.crypto.tink.KeysetHandle
 import com.google.crypto.tink.Parameters
 import com.google.crypto.tink.config.TinkConfig
@@ -13,7 +12,7 @@ class KeysetManager(
     private val associatedDataManager: AssociatedDataManager
 ) {
     private val mutex = Mutex()
-    private val keysetList = SparseArray<KeysetHandle>()
+    private val keysetList = HashMap<Int, KeysetHandle>()
 
     suspend fun getKeyset(
         tag: String,
@@ -28,7 +27,7 @@ class KeysetManager(
             tag = tag,
             keyParams = keyParams,
             associatedData = ad
-        ).also { if (cache) keysetList.append(keysetHash, it) }
+        ).also { if (cache) keysetList[keysetHash] = it }
     }
 
     init {
