@@ -16,18 +16,19 @@ class KeysetManager(
 
     suspend fun getKeyset(
         tag: String,
-        tagHash: Int = tag.hashCode(),
         associatedData: ByteArray? = null,
         keyParams: Parameters,
+        keysetTag: String = "$tag:$keyParams",
+        keysetTagHash: Int = keysetTag.hashCode(),
         cache: Boolean = true
     ): KeysetHandle = mutex.withLock {
         val ad = associatedData ?: associatedDataManager.getAssociatedData()
 
-        keysetList[tagHash] ?: keysetFactory.create(
-            tag = tag,
+        keysetList[keysetTagHash] ?: keysetFactory.create(
+            tag = keysetTag,
             keyParams = keyParams,
             associatedData = ad
-        ).also { if (cache) keysetList[tagHash] = it }
+        ).also { if (cache) keysetList[keysetTagHash] = it }
     }
 
     init {

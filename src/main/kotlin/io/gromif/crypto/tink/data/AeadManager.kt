@@ -26,15 +26,17 @@ class AeadManager(
         associatedData: ByteArray? = null,
         keyParams: AeadParameters,
     ): Aead {
-        val tagHash = tag.hashCode()
-        return aeadMap[tagHash] ?: keysetManager.getKeyset(
+        val keysetTag = "$tag:$keyParams"
+        val keysetTagHash = keysetTag.hashCode()
+        return aeadMap[keysetTagHash] ?: keysetManager.getKeyset(
             tag = tag,
-            tagHash = tagHash,
+            keysetTag = keysetTag,
+            keysetTagHash = keysetTagHash,
             associatedData = associatedData,
             keyParams = keyParams,
             cache = false
         ).aead().also {
-            aeadMap[tagHash] = it
+            aeadMap[keysetTagHash] = it
         }
     }
 
@@ -43,15 +45,17 @@ class AeadManager(
         associatedData: ByteArray? = null,
         keyParams: PrfParameters,
     ): PrfSet {
-        val tagHash = tag.hashCode()
-        return prfMap[tagHash] ?: keysetManager.getKeyset(
+        val keysetTag = "$tag:$keyParams"
+        val keysetTagHash = keysetTag.hashCode()
+        return prfMap[keysetTagHash] ?: keysetManager.getKeyset(
             tag = tag,
-            tagHash = tagHash,
+            keysetTag = keysetTag,
+            keysetTagHash = keysetTagHash,
             associatedData = associatedData,
             keyParams = keyParams,
             cache = false
         ).prf().also {
-            prfMap[tagHash] = it
+            prfMap[keysetTagHash] = it
         }
     }
 
@@ -60,15 +64,17 @@ class AeadManager(
         associatedData: ByteArray? = null,
         keyParams: DeterministicAeadParameters,
     ): DeterministicAead {
-        val tagHash = tag.hashCode()
-        return deterministicAeadMap[tagHash] ?: keysetManager.getKeyset(
+        val keysetTag = "$tag:$keyParams"
+        val keysetTagHash = keysetTag.hashCode()
+        return deterministicAeadMap[keysetTagHash] ?: keysetManager.getKeyset(
             tag = tag,
-            tagHash = tagHash,
+            keysetTag = keysetTag,
+            keysetTagHash = keysetTagHash,
             associatedData = associatedData,
             keyParams = keyParams,
             cache = false
         ).deterministicAead().also {
-            deterministicAeadMap[tagHash] = it
+            deterministicAeadMap[keysetTagHash] = it
         }
     }
 
@@ -77,15 +83,17 @@ class AeadManager(
         associatedData: ByteArray? = null,
         keyParams: StreamingAeadParameters,
     ): StreamingAead {
-        val tagHash = tag.hashCode()
-        return streamingAeadMap[tagHash] ?: keysetManager.getKeyset(
+        val keysetTag = "$tag:$keyParams"
+        val keysetTagHash = keysetTag.hashCode()
+        return streamingAeadMap[keysetTagHash] ?: keysetManager.getKeyset(
             tag = tag,
-            tagHash = tagHash,
+            keysetTag = keysetTag,
+            keysetTagHash = keysetTagHash,
             associatedData = associatedData,
             keyParams = keyParams,
             cache = false
         ).streamingAead().also {
-            streamingAeadMap[tagHash] = it
+            streamingAeadMap[keysetTagHash] = it
         }
     }
 
