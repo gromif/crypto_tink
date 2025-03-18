@@ -7,6 +7,9 @@ import io.gromif.crypto.tink.model.KeysetFactory
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 
+/**
+ * Utility for low-level keyset management.
+ */
 class KeysetManager(
     private val keysetFactory: KeysetFactory,
     private val associatedDataManager: AssociatedDataManager
