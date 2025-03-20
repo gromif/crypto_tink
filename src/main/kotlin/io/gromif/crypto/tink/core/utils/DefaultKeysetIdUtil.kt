@@ -9,7 +9,7 @@ class DefaultKeysetIdUtil(
     private val hashUtil: HashUtil,
 ) : KeysetIdUtil {
 
-    override suspend fun compute(
+    override fun compute(
         tag: String,
         associatedData: ByteArray,
     ): String {
