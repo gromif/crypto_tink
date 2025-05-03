@@ -2,7 +2,7 @@ package io.gromif.crypto.tink.core.utils
 
 import io.gromif.crypto.tink.core.encoders.Encoder
 import io.gromif.crypto.tink.core.hash.HashUtil
-import io.gromif.crypto.tink.model.KeysetIdUtil
+import io.gromif.crypto.tink.keyset.KeysetIdUtil
 
 class DefaultKeysetIdUtil(
     private val encoder: Encoder,
