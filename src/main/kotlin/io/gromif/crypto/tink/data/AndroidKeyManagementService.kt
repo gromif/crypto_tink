@@ -5,19 +5,19 @@ import com.google.crypto.tink.Parameters
 import com.google.crypto.tink.integration.android.AndroidKeystore
 import io.gromif.crypto.tink.core.parsers.KeysetParserWithAead
 import io.gromif.crypto.tink.core.serializers.KeysetSerializerWithAead
-import io.gromif.crypto.tink.model.KeysetFactory
+import io.gromif.crypto.tink.model.KeyManagementService
 import io.gromif.crypto.tink.model.KeysetIdUtil
 import io.gromif.crypto.tink.model.KeysetReader
 import io.gromif.crypto.tink.model.KeysetWriter
 
-class DefaultKeysetFactory(
+class AndroidKeyManagementService(
     private val keysetReader: KeysetReader,
     private val keysetWriter: KeysetWriter,
     private val keysetSerializerWithAead: KeysetSerializerWithAead,
     private val keysetParserWithAead: KeysetParserWithAead,
     private val prefsKeysetIdUtil: KeysetIdUtil,
     private val masterKeysetIdUtil: KeysetIdUtil,
-) : KeysetFactory {
+) : KeyManagementService {
 
     override suspend fun create(
         tag: String,

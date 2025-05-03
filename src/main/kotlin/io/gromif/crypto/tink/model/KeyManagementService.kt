@@ -6,7 +6,7 @@ import com.google.crypto.tink.Parameters
 /**
  * Defines the process for [KeysetHandle] creation.
  */
-interface KeysetFactory {
+interface KeyManagementService {
 
     suspend fun create(
         tag: String,

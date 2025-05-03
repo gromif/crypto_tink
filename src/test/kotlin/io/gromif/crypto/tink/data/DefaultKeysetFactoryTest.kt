@@ -33,7 +33,7 @@ class DefaultKeysetFactoryTest {
     private val prefsKeysetIdUtilMock: KeysetIdUtil = mockk()
     private val masterKeysetIdUtilMock: KeysetIdUtil = mockk()
 
-    private val defaultKeysetFactory = DefaultKeysetFactory(
+    private val defaultKeysetFactory = AndroidKeyManagementService(
         keysetReader = keysetReaderMock,
         keysetWriter = keysetWriterMock,
         keysetSerializerWithAead = keysetSerializerWithAeadMock,

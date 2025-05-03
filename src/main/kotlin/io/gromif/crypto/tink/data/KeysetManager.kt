@@ -3,7 +3,7 @@ package io.gromif.crypto.tink.data
 import com.google.crypto.tink.KeysetHandle
 import com.google.crypto.tink.Parameters
 import com.google.crypto.tink.config.TinkConfig
-import io.gromif.crypto.tink.model.KeysetFactory
+import io.gromif.crypto.tink.model.KeyManagementService
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 
@@ -11,7 +11,7 @@ import kotlinx.coroutines.sync.withLock
  * Utility for low-level keyset management.
  */
 class KeysetManager(
-    private val keysetFactory: KeysetFactory,
+    private val keyManagementService: KeyManagementService,
     private val associatedDataManager: AssociatedDataManager
 ) {
     private val mutex = Mutex()
@@ -27,7 +27,7 @@ class KeysetManager(
     ): KeysetHandle = mutex.withLock {
         val ad = associatedData ?: associatedDataManager.getAssociatedData()
 
-        keysetList[keysetTagHash] ?: keysetFactory.create(
+        keysetList[keysetTagHash] ?: keyManagementService.create(
             tag = keysetTag,
             keyParams = keyParams,
             associatedData = ad
