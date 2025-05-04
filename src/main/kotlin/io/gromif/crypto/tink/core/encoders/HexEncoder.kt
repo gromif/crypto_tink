@@ -8,8 +8,8 @@ class HexEncoder : Encoder {
         return Hex.encode(bytes)
     }
 
-    override fun decode(hex: String): ByteArray {
-        return Hex.decode(hex)
+    override fun decode(value: String): ByteArray {
+        return Hex.decode(value)
     }
 
     override fun encode(value: String): String {
